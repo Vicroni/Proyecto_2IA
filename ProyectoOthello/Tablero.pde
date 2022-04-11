@@ -51,13 +51,6 @@ class Tablero{
     tablero[y][x]= turno ? BLANCO : NEGRO;
   }
   
-  void generaPosiblesMovimientos(){
-    for(int j=0;j<8 ;j++){
-      for(int i=0;i<8 ;i++){
-        tablero[j][i]=3;
-      }
-    }
-  }
   
   void cambiarTurno(){
     turno=!turno;
