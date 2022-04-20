@@ -5,7 +5,8 @@ class Tree:
     POSIBLE=3
     
     def __init__(self, data):
-        self.data = data
+        copia=[[[k for k in i] for i in j] for j in data]
+        self.data = copia
         self.children = []
 
     def generaHijos(self, profundidad, turno):
@@ -31,26 +32,25 @@ class Tree:
     def voltearFichas(x,y,matriz, turno):
         copiaModificada=[[[k for k in i] for i in j] for j in matriz]
         if(turno): 
-            Tree.voltearFichasDireccion(x,y,Tablero.BLANCO, Tablero.NEGRO,1,0,copiaModificada,matriz) #HorizontalesPositivos
-            Tree.voltearFichasDireccion(x,y,Tablero.BLANCO, Tablero.NEGRO,-1,0,copiaModificada,matriz) #HorizontalesNegativos
-            Tree.voltearFichasDireccion(x,y,Tablero.BLANCO, Tablero.NEGRO,0,1,copiaModificada,matriz) #VerticalesPostivos
-            Tree.voltearFichasDireccion(x,y,Tablero.BLANCO, Tablero.NEGRO,0,-1,copiaModificada,matriz) #VerticalesNegativos
+            Tree.voltearFichasDireccion(x,y,Tree.BLANCO, Tree.NEGRO,1,0,copiaModificada,matriz) #HorizontalesPositivos
+            Tree.voltearFichasDireccion(x,y,Tree.BLANCO, Tree.NEGRO,-1,0,copiaModificada,matriz) #HorizontalesNegativos
+            Tree.voltearFichasDireccion(x,y,Tree.BLANCO, Tree.NEGRO,0,1,copiaModificada,matriz) #VerticalesPostivos
+            Tree.voltearFichasDireccion(x,y,Tree.BLANCO, Tree.NEGRO,0,-1,copiaModificada,matriz) #VerticalesNegativos
             #Diagonales
-            Tree.voltearFichasDireccion(x,y,Tablero.BLANCO, Tablero.NEGRO,1,1,copiaModificada,matriz) 
-            Tree.voltearFichasDireccion(x,y,Tablero.BLANCO, Tablero.NEGRO,1,-1,copiaModificada,matriz) 
-            Tree.voltearFichasDireccion(x,y,Tablero.BLANCO, Tablero.NEGRO,-1,1,copiaModificada,matriz) 
-            Tree.voltearFichasDireccion(x,y,Tablero.BLANCO, Tablero.NEGRO,-1,-1,copiaModificada,matriz) 
+            Tree.voltearFichasDireccion(x,y,Tree.BLANCO, Tree.NEGRO,1,1,copiaModificada,matriz) 
+            Tree.voltearFichasDireccion(x,y,Tree.BLANCO, Tree.NEGRO,1,-1,copiaModificada,matriz) 
+            Tree.voltearFichasDireccion(x,y,Tree.BLANCO, Tree.NEGRO,-1,1,copiaModificada,matriz) 
+            Tree.voltearFichasDireccion(x,y,Tree.BLANCO, Tree.NEGRO,-1,-1,copiaModificada,matriz) 
         else:
-            Tree.voltearFichasDireccion(x,y,Tablero.NEGRO, Tablero.BLANCO,1,0,copiaModificada,matriz) #HorizontalesPositivos
-            Tree.voltearFichasDireccion(x,y,Tablero.NEGRO, Tablero.BLANCO,-1,0,copiaModificada,matriz) #HorizontalesNegativos
-            Tree.voltearFichasDireccion(x,y,Tablero.NEGRO, Tablero.BLANCO,0,1,copiaModificada,matriz) #VerticalesPostivos
-            Tree.voltearFichasDireccion(x,y,Tablero.NEGRO, Tablero.BLANCO,0,-1,copiaModificada,matriz) #VerticalesNegativos
+            Tree.voltearFichasDireccion(x,y,Tree.NEGRO, Tree.BLANCO,1,0,copiaModificada,matriz) #HorizontalesPositivos
+            Tree.voltearFichasDireccion(x,y,Tree.NEGRO, Tree.BLANCO,-1,0,copiaModificada,matriz) #HorizontalesNegativos
+            Tree.voltearFichasDireccion(x,y,Tree.NEGRO, Tree.BLANCO,0,1,copiaModificada,matriz) #VerticalesPostivos
+            Tree.voltearFichasDireccion(x,y,Tree.NEGRO, Tree.BLANCO,0,-1,copiaModificada,matriz) #VerticalesNegativos
             #Diagonales
-            Tree.voltearFichasDireccion(x,y,Tablero.NEGRO, Tablero.BLANCO,1,1,copiaModificada,matriz) 
-            Tree.voltearFichasDireccion(x,y,Tablero.NEGRO, Tablero.BLANCO,1,-1,copiaModificada,matriz) 
-            Tree.voltearFichasDireccion(x,y,Tablero.NEGRO, Tablero.BLANCO,-1,1,copiaModificada,matriz) 
-            Tree.voltearFichasDireccion(x,y,Tablero.NEGRO, Tablero.BLANCO,-1,-1,copiaModificada,matriz)
-        
+            Tree.voltearFichasDireccion(x,y,Tree.NEGRO, Tree.BLANCO,1,1,copiaModificada,matriz) 
+            Tree.voltearFichasDireccion(x,y,Tree.NEGRO, Tree.BLANCO,1,-1,copiaModificada,matriz) 
+            Tree.voltearFichasDireccion(x,y,Tree.NEGRO, Tree.BLANCO,-1,1,copiaModificada,matriz) 
+            Tree.voltearFichasDireccion(x,y,Tree.NEGRO, Tree.BLANCO,-1,-1,copiaModificada,matriz)
         return copiaModificada
     
     @staticmethod     

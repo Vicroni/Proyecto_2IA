@@ -1,9 +1,6 @@
 from Tree import Tree
 
 class Tablero:
-    BLANCO=1
-    NEGRO=2
-    POSIBLE=3
   
     def __init__(self):
         self.tablero = [[[y,x,0]  for x in range(10)] for y in range(10)]
@@ -24,11 +21,11 @@ class Tablero:
         validas=Tree.generaPosiblesMovimiento(self.tablero, self.turno)
         for x,y,v in validas: 
             self.tablero[x][y]=[x,y,3]
-              
+            
     def colocarFicha(self, x, y):
         if(self.turno): 
-            self.tablero[x+2][y+2][2] = Tablero.BLANCO
+            self.tablero[x+2][y+2][2] = Tree.BLANCO
         else:
-            self.tablero[x+2][y+2][2] = Tablero.NEGRO 
+            self.tablero[x+2][y+2][2] = Tree.NEGRO 
         Tree.limpiarPosiblesMovimientos(self.tablero)
      
