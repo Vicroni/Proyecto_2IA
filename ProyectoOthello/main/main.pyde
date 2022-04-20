@@ -32,5 +32,5 @@ def mousePressed():
     x=mouseY/TAMANO_CASILLA
     y=mouseX/TAMANO_CASILLA
     tab.colocarFicha(x,y)
-    tab.tablero=tab.voltearFichas(x,y, tab.tablero)
+    tab.tablero=Tablero.voltearFichas(x,y, tab.tablero, tab.turno)
     tab.cambiarTurno()
