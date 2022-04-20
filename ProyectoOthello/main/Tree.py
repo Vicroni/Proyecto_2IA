@@ -8,6 +8,7 @@ class Tree:
         copia=[[[k for k in i] for i in j] for j in data]
         self.data = copia
         self.children = []
+        self.profundidad=0
 
     def generaHijos(self, profundidad, turno):
         if profundidad != 0: 
@@ -19,8 +20,18 @@ class Tree:
                     copia[x][y][2] = Tree.NEGRO 
                 t=Tree(copia)
                 t.generaHijos(profundidad-1, not turno)
+                self.profundidad=profundidad
                 self.children.append(t)
-    
+                
+    def __str__(self):
+        if self.profundidad == 0:
+           return str(self.profundidad)
+        else: 
+            cadena=str(self.profundidad)+":"
+            for i in self.children: 
+                cadena=cadena+str(i)
+            return cadena
+
     @staticmethod     
     def limpiarPosiblesMovimientos(matriz): 
         for i in matriz: 

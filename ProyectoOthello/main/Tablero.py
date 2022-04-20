@@ -14,7 +14,8 @@ class Tablero:
         self.colocarFicha(4, 4)
         self.cambiarTurno()
         self.tree = Tree(self.tablero)
-        self.tree.generaHijos(4, self.turno)
+        self.tree.generaHijos(2, self.turno)
+        print(str(self.tree))
         
     def cambiarTurno(self):
         self.turno= not self.turno
