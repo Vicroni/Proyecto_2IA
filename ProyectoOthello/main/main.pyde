@@ -35,3 +35,8 @@ def mousePressed():
     tab.colocarFicha(x,y)
     tab.tablero=Tree.voltearFichas(x,y, tab.tablero, tab.turno)
     tab.cambiarTurno()
+    tab.tree = Tree(tab.tablero)
+    tab.tree.generaHijos(4, tab.turno)
+    print(tab.tree)
+    print(tab.tree.children[0])
+    print("##########")

@@ -15,9 +15,9 @@ class Tablero:
         self.cambiarTurno()
         self.tree = Tree(self.tablero)
         self.tree.generaHijos(4, self.turno)
+        print(self.tree)
         print(self.tree.children[0])
-        for i in self.tree.children[0].children:
-            print(i)
+        print("##########")
         
     def cambiarTurno(self):
         self.turno= not self.turno
