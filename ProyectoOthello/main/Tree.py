@@ -16,15 +16,15 @@ class Tree:
                 turno = not turno
                 movimientos = self.generaPosiblesMovimiento(self.data, turno)
             for x,y,v in movimientos: 
-                copia=[[[k for k in i] for i in j] for j in self.data]
-                if(turno): 
-                    copia[x][y][2] = Tree.BLANCO
-                else:
-                    copia[x][y][2] = Tree.NEGRO
-                copia=Tree.voltearFichas(x-1,y-1, copia, turno) 
-                t=Tree(copia)
-                t.generaHijos(profundidad-1, not turno)
-                self.children.append(t)
+                    copia=[[[k for k in i] for i in j] for j in self.data]
+                    if(turno): 
+                        copia[x][y][2] = Tree.BLANCO
+                    else:
+                        copia[x][y][2] = Tree.NEGRO
+                    copia=Tree.voltearFichas(x-1,y-1, copia, turno) 
+                    t=Tree(copia)
+                    t.generaHijos(profundidad-1, not turno)
+                    self.children.append(t)
             
                 
     def __str__(self):
@@ -115,4 +115,8 @@ class Tree:
                     validas.append(cadena[m.start()])
                 for m in re.finditer(re.compile(r'21+0'), str1):
                     validas.append(cadena[m.end()-1])
-        return validas
+        validasSinOrillas = []
+        for x,y,v in validas:            
+            if x > 0 and x < 9 and y > 0 and y < 9 :
+                validasSinOrillas.append([x,y,v])
+        return validasSinOrillas

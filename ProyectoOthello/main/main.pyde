@@ -15,7 +15,6 @@ def draw():
             stroke(0) 
             strokeWeight(1.2)
             rect(i*TAMANO_CASILLA,j*TAMANO_CASILLA,TAMANO_CASILLA,TAMANO_CASILLA)
-            
             if(tab.tablero[j+1][i+1][2]==Tree.BLANCO):
                 fill(255)
                 strokeWeight(0.8)
@@ -32,11 +31,7 @@ def draw():
 def mousePressed():
     x=mouseY/TAMANO_CASILLA
     y=mouseX/TAMANO_CASILLA
-    tab.colocarFicha(x,y)
-    tab.tablero=Tree.voltearFichas(x,y, tab.tablero, tab.turno)
-    tab.cambiarTurno()
-    tab.tree = Tree(tab.tablero)
-    tab.tree.generaHijos(4, tab.turno)
-    print(tab.tree)
-    print(tab.tree.children[0])
-    print("##########")
+    if tab.tablero[x+1][y+1][2] == 3:
+        tab.colocarFicha(x,y)
+        tab.tablero=Tree.voltearFichas(x,y, tab.tablero, tab.turno)
+        tab.cambiarTurno()
