@@ -14,8 +14,10 @@ class Tablero:
         self.colocarFicha(4, 4)
         self.cambiarTurno()
         self.tree = Tree(self.tablero)
-        self.tree.generaHijos(2, self.turno)
-        print(str(self.tree))
+        self.tree.generaHijos(4, self.turno)
+        print(self.tree.children[0])
+        for i in self.tree.children[0].children:
+            print(i)
         
     def cambiarTurno(self):
         self.turno= not self.turno
@@ -25,8 +27,8 @@ class Tablero:
             
     def colocarFicha(self, x, y):
         if(self.turno): 
-            self.tablero[x+2][y+2][2] = Tree.BLANCO
+            self.tablero[x+1][y+1][2] = Tree.BLANCO
         else:
-            self.tablero[x+2][y+2][2] = Tree.NEGRO 
+            self.tablero[x+1][y+1][2] = Tree.NEGRO 
         Tree.limpiarPosiblesMovimientos(self.tablero)
      

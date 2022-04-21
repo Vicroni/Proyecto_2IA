@@ -20,20 +20,10 @@ class Tree:
                 if(turno): 
                     copia[x][y][2] = Tree.BLANCO
                 else:
-                    copia[x][y][2] = Tree.NEGRO
-                copia=Tree.voltearFichas(x-1,y-1, copia, turno) 
+                    copia[x][y][2] = Tree.NEGRO 
                 t=Tree(copia)
                 t.generaHijos(profundidad-1, not turno)
                 self.children.append(t)
-            
-                
-    def __str__(self):
-        cadena=""
-        for i in self.data: 
-            for x,y,v in i: 
-                cadena = cadena+str(v)+" "
-            cadena=cadena +"\n"
-        return cadena
     
     @staticmethod     
     def limpiarPosiblesMovimientos(matriz): 
@@ -71,14 +61,14 @@ class Tree:
     def voltearFichasDireccion(x,y, colorTiro, colorOpuesto, incrementoX, incrementoY, copiaModificada, matriz): 
         dx=incrementoX
         dy=incrementoY
-        while(matriz[x+1+dx][y+1+dy][2]==colorOpuesto):
+        while(matriz[x+2+dx][y+2+dy][2]==colorOpuesto):
             dx=dx+incrementoX
             dy=dy+incrementoY
-        if(matriz[x+1+dx][y+1+dy][2]==colorTiro): 
+        if(matriz[x+2+dx][y+2+dy][2]==colorTiro): 
             dx=incrementoX
             dy=incrementoY
-            while(matriz[x+1+dx][y+1+dy][2]==colorOpuesto):
-                copiaModificada[x+1+dx][y+1+dy][2]=colorTiro
+            while(matriz[x+2+dx][y+2+dy][2]==colorOpuesto):
+                copiaModificada[x+2+dx][y+2+dy][2]=colorTiro
                 dx=dx+incrementoX
                 dy=dy+incrementoY
             
