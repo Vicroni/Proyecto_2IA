@@ -49,14 +49,17 @@ class Tablero:
         #en cada iteracion
         self.tree = Tree(self.tablero)
         self.tree.generaHijos(3, self.turno)
-        '''
+        #Para imprimir
         print(self.tree)
         if self.tree.children != []:
-            print(self.tree.children[0])
-            if self.tree.children[0].children != []:
-                print(self.tree.children[0].children[0])
+            for child in self.tree.children:
+                print("Hijo")
+                print(child)
+                if child.children != []:
+                    print("Nietos")
+                    for grandChild in child.children:
+                        print(grandChild)
         print("##########")
-        '''
         
     #Funcion que coloca una ficha en el tablero 
     #y como cuando colocas una ficha tienes que limpiar 
