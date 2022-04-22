@@ -42,7 +42,7 @@ class Tree:
             movimientos = self.generaPosiblesMovimiento(self.data, turno)
             #Checamos que haya movimientos si no los hay entonces cambiamos 
             #de turno y generamos otros movimientos
-            if movimientos == 0: 
+            if movimientos == []: 
                 turno = not turno
                 movimientos = self.generaPosiblesMovimiento(self.data, turno)
             #Por cada movimiento generamos una copia del tablero

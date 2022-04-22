@@ -46,3 +46,5 @@ def mousePressed():
         tab.tablero=Tree.voltearFichas(x,y, tab.tablero, tab.turno)
         #Ademas de cambiar el turno
         tab.cambiarTurno()
+        #Colocamos los posibles movimientos
+        tab.colocaPosiblesMovimientos()

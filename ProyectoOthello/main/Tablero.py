@@ -15,14 +15,11 @@ class Tablero:
         #Turno esta representado por un booleano
         self.turno = False
         #Colocamos las cuatro fichas iniciales
-        self.colocarFicha(3, 4)
-        self.cambiarTurno()
-        self.colocarFicha(3, 3)
-        self.cambiarTurno()
-        self.colocarFicha(4, 3)
-        self.cambiarTurno()
-        self.colocarFicha(4, 4)
-        self.cambiarTurno()
+        self.tablero[4][5][2] = Tree.NEGRO
+        self.tablero[5][5][2] = Tree.BLANCO
+        self.tablero[5][4][2] = Tree.NEGRO
+        self.tablero[4][4][2] = Tree.BLANCO
+        self.colocaPosiblesMovimientos()
         #Inicializamos el primero arbol con el tablero actual
         self.tree = Tree(self.tablero)
         self.tree.generaHijos(3, self.turno)
@@ -31,12 +28,18 @@ class Tablero:
     def cambiarTurno(self):
         #Primero cambia el turno en booleno 
         self.turno= not self.turno
+        
+    #Coloca las posibles jugadas en el tablero
+    def colocaPosiblesMovimientos(self):    
         #Obtiene los posibles movimientos del tablero, 
         #estos estan representados como [x,y,v], donde x,y es 
         #la posicion del posible movimiento y v siempre vale 0, 
         #puesto que esa casilla debe estar vacia
         validas=Tree.generaPosiblesMovimiento(self.tablero, self.turno)
         #Pintamos los posibles movimientos en el tablero
+        if validas == []: 
+            self.turno = not self.turno
+        validas=Tree.generaPosiblesMovimiento(self.tablero, self.turno)
         for x,y,v in validas: 
             self.tablero[x][y]=[x,y,3]
         #Actualizamos el arbol
@@ -54,6 +57,7 @@ class Tablero:
                 print(self.tree.children[0].children[0])
         print("##########")
         '''
+        
     #Funcion que coloca una ficha en el tablero 
     #y como cuando colocas una ficha tienes que limpiar 
     #los posibles movimientos, tambien lo hace    
