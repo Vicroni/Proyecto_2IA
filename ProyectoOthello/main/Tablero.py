@@ -5,6 +5,12 @@ que se muestra en pantalla, tambien controla y actualiza el arbol
 dependiendo de la jugadas en pantalla
 '''
 class Tablero:
+    BLANCO=Tree.BLANCO
+    NEGRO=Tree.NEGRO
+    POSIBLE=Tree.POSIBLE
+    DIFICULTAD_FACIL = "facil"
+    DIFICULTAD_MEDIA = "media"
+    DIFICULTAD_DIFICIL = "dificil"
   
     #Inicializamos el tablero
     def __init__(self):
@@ -23,6 +29,8 @@ class Tablero:
         #Inicializamos el primero arbol con el tablero actual
         self.tree = Tree(self.tablero)
         self.tree.generaHijos(3, self.turno)
+        # Seleccionamos el nivel de dificultad:
+        self.dificultad = Tablero.DIFICULTAD_MEDIA
         
     #Realiza el cambio de turno
     def cambiarTurno(self):
