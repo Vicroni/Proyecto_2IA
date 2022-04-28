@@ -1,4 +1,6 @@
+# -*- coding: UTF-8 -*-
 from Tablero import Tablero
+from Tree import Tree
 import math
 
 class Heuristicas:
@@ -9,6 +11,11 @@ class Heuristicas:
         else:
             self.yo = Tablero.NEGRO
             self.oponente = Tablero.BLANCO
+
+
+    #eval es usado así para evitar reconstruir la matriz cada quien, pero esta pensado con construirVAriacion
+    def heuristicaCanon(self,tab, eval):
+        return self.movilidad(tab) + self.tableroEvaluacion(tab,eval)
 
     def cuentaNormal(self, tab):
         cuenta = 0
@@ -64,16 +71,22 @@ class Heuristicas:
                     eval[y][x] = taxidis
         return eval
 
+    def movilidad(self,tab):
+        if self.yo == Tablero.BLANCO:
+            return len(Tree.generaPosiblesMovimiento(tab.tablero,True))
+        else:
+            return len(Tree.generaPosiblesMovimiento(tab.tablero,False))
 
-h = Heuristicas(True)
-tablero = Tablero()
-print("Cuenta normal: {cuenta}".format(cuenta = h.cuentaNormal(tablero)))
-print("Diferencia: {dif}".format(dif = h.diferencia(tablero)))
-eval = h.construirOrillasyEsquinas()
-for x in eval:
-    print(x)
-print("OrillasYEsquinas: {oye}".format(oye = h.tableroEvaluacion(tablero, eval)))
-eval = h.distanciaTaxi()
-for x in eval:
-    print(x)
-print("distanciaTaxi: {dT}".format(dT=h.tableroEvaluacion(tablero, eval)))
+    def construirVariacion(self):
+        eval = [[] for y in range(10)]
+        eval[0]=[0,0,0,0,0,0,0,0,0,0]
+        eval[1]=[0,50,-1,5,2,2,5,-1,50,0]
+        eval[2]=[0,-1,-5,1,1,1,1,-5,-1,0]
+        eval[3]=[0,5,1,1,1,1,1,1,5,0]
+        eval[4]=[0,2,1,1,1,1,1,1,2,0]
+        eval[5]= eval[4]
+        eval[6]= eval[3]
+        eval[7]= eval[2]
+        eval[8]= eval[1]
+        eval[9]= eval[0]
+        return eval
