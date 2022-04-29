@@ -146,7 +146,6 @@ class Tree:
     '''
     @staticmethod         
     def generaPosiblesMovimiento(matriz, turno):
-        Tree.limpiarPosiblesMovimientos(matriz)
         #Genera las posibles combinaciones de la matriz(Filas, Columnas, Diagonales Derechas, Diagonales Izquierdas)
         max_col = len(matriz[0])
         max_row = len(matriz)

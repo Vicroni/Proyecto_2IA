@@ -38,7 +38,14 @@ class Tablero:
         self.turno= not self.turno
         
     #Coloca las posibles jugadas en el tablero
-    def colocaPosiblesMovimientos(self):    
+    def colocaPosiblesMovimientos(self):
+        Tree.limpiarPosiblesMovimientos(self.tablero)
+        from Heuristicas import Heuristicas
+        h = Heuristicas(False)
+        print(h.movilidad(self))
+        print(h.tableroEvaluacion(self,h.construirVariacion()))
+        print(h.heuristicaCanon(self, h.construirVariacion()))
+        print("-----")    
         #Obtiene los posibles movimientos del tablero, 
         #estos estan representados como [x,y,v], donde x,y es 
         #la posicion del posible movimiento y v siempre vale 0, 
@@ -58,19 +65,17 @@ class Tablero:
         self.tree = Tree(self.tablero)
         self.tree.generaHijos(3, self.turno)
         #Para imprimir
-        print(self.tree)
-        if self.tree.children != []:
-            for child in self.tree.children:
-                print("Hijo")
-                print(child)
-                if child.children != []:
-                    print("Nietos")
-                    for grandChild in child.children:
-                        print(grandChild)
-        print("##########")
-        from Heuristicas import Heuristicas
-        h = Heuristicas(True)
-        print(h.heuristicaCanon(self,h.construirVariacion()))
+#        print(self.tree)
+#        if self.tree.children != []:
+#            for child in self.tree.children:
+#                print("Hijo")
+#                print(child)
+#                if child.children != []:
+#                    print("Nietos")
+#                    for grandChild in child.children:
+#                        print(grandChild)
+#        print("##########")
+        
         
     #Funcion que coloca una ficha en el tablero 
     #y como cuando colocas una ficha tienes que limpiar 
