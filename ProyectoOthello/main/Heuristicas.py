@@ -109,3 +109,6 @@ class Heuristicas:
             if x not in newList:
                 newList.append(x)
         return newList
+    @staticmethod   
+    def heuristicaSimple(tab, turno): 
+        return 1

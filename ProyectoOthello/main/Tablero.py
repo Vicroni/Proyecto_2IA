@@ -25,10 +25,11 @@ class Tablero:
         self.tablero[5][5][2] = Tree.BLANCO
         self.tablero[5][4][2] = Tree.NEGRO
         self.tablero[4][4][2] = Tree.BLANCO
+        self.anterior=[4,4,Tree.BLANCO]
         self.colocaPosiblesMovimientos()
         #Inicializamos el primero arbol con el tablero actual
-        self.tree = Tree(self.tablero)
-        self.tree.generaHijos(3, self.turno)
+        self.tree = Tree(self.tablero, self.anterior, self.turno)
+        self.tree.generaHijos(1, self.turno)
         # Seleccionamos el nivel de dificultad:
         self.dificultad = Tablero.DIFICULTAD_MEDIA
         
@@ -40,12 +41,20 @@ class Tablero:
     #Coloca las posibles jugadas en el tablero
     def colocaPosiblesMovimientos(self):
         Tree.limpiarPosiblesMovimientos(self.tablero)
-        from Heuristicas import Heuristicas
-        h = Heuristicas(False)
-        print(h.movilidad(self))
-        print(h.tableroEvaluacion(self,h.construirVariacion()))
-        print(h.heuristicaCanon(self, h.construirVariacion()))
-        print("-----")    
+        #Juego automatico
+        self.tree = Tree(self.tablero, self.anterior, self.turno)
+        self.tree.generaHijos(1, self.turno)
+        [x,y,v] = Tree.calculaMejorMovimiento(self.tree)
+        self.colocarFicha(x, y)
+        self.tablero = Tree.voltearFichas(x,y,self.tablero, self.turno)
+        self.turno = not self.turno
+        #print([x,y,v])
+        #from Heuristicas import Heuristicas
+        #h = Heuristicas(False)
+        #print(h.movilidad(self))
+        #print(h.tableroEvaluacion(self,h.construirVariacion()))
+        #print(h.heuristicaCanon(self, h.construirVariacion()))
+        #print("-----")    
         #Obtiene los posibles movimientos del tablero, 
         #estos estan representados como [x,y,v], donde x,y es 
         #la posicion del posible movimiento y v siempre vale 0, 
@@ -57,33 +66,17 @@ class Tablero:
         validas=Tree.generaPosiblesMovimiento(self.tablero, self.turno)
         for x,y,v in validas: 
             self.tablero[x][y]=[x,y,3]
-        #Actualizamos el arbol
-        #Esta actualizacion podria ser mejorada empleando generadores(yield)
-        #lo cual impactaria directamente en omitir el calculo de ciertos niveles 
-        #y podria ahorra bastante tiempo pero por el momento genera todo el arbol 
-        #en cada iteracion
-        self.tree = Tree(self.tablero)
-        self.tree.generaHijos(3, self.turno)
-        #Para imprimir
-#        print(self.tree)
-#        if self.tree.children != []:
-#            for child in self.tree.children:
-#                print("Hijo")
-#                print(child)
-#                if child.children != []:
-#                    print("Nietos")
-#                    for grandChild in child.children:
-#                        print(grandChild)
-#        print("##########")
-        
-        
+
+                     
     #Funcion que coloca una ficha en el tablero 
     #y como cuando colocas una ficha tienes que limpiar 
     #los posibles movimientos, tambien lo hace    
     def colocarFicha(self, x, y):
         if(self.turno): 
             self.tablero[x+1][y+1][2] = Tree.BLANCO
+            self.anterior=[x+1,y+1,Tree.BLANCO]
         else:
             self.tablero[x+1][y+1][2] = Tree.NEGRO 
+            self.anterior=[x+1,y+1,Tree.NEGRO]
         Tree.limpiarPosiblesMovimientos(self.tablero)
      

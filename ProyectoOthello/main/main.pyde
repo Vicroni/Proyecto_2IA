@@ -15,8 +15,6 @@ BOTON_ALTO = 35
 COLOR_FONDO_MENU = (229,192,82)
 COLOR_BOTON = (252, 219, 121)
 COLOR_BOTON_SELECCIONADO = (214,175,57)
-
-
 """
 Clase que define un boton.
 """
@@ -67,7 +65,7 @@ def draw():
 
 #Capturamos un click en la ventana
 def mousePressed():
-
+    global mostrar_menu
     if mostrar_menu :
         if botonFacil.posicionEstaDentroDeEsteFrame(mouseX, mouseY):
             iniciarJuego("facil")
@@ -82,7 +80,6 @@ def mousePressed():
             tableroPanel.onMousePressed(mouseX, mouseY)
         
         if botonMenuPrincipal.posicionEstaDentroDeEsteFrame(mouseX, mouseY):
-            global mostrar_menu
             mostrar_menu = True
 
 
@@ -95,7 +92,6 @@ def iniciarJuego(dificultad):
     sidePanel = SidePanel(tab)
     global tableroPanel
     tableroPanel = TableroPanel(tab, sidePanel)
-
 
 def dibujarMenu():
     posTexto1 = (380,280)

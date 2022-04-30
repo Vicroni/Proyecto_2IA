@@ -15,12 +15,14 @@ class Tree:
     Inicializa el arbol, recibiendo en data un tablero 
     con cierta configuracion
     '''
-    def __init__(self, data):
+    def __init__(self, data, movimiento, turno):
         #Elimina las referencias
         copia=[[[k for k in i] for i in j] for j in data]
         #Inicializa las variables de la clase
         self.data = copia
         self.children = []
+        self.movimiento = movimiento
+        self.turno = turno
 
     '''
     Metodo recursivo que recibe dos argumentos profundidad
@@ -57,11 +59,52 @@ class Tree:
                     copia=Tree.voltearFichas(x-1,y-1, copia, turno)
                     #Creamos un arbol que inicializamos con el tablero correspondiente 
                     #al movimiento que acabamos de hacer 
-                    t=Tree(copia)
+                    t=Tree(copia, [x,y,v], turno)
                     #Y le ordenamos que genere hijos con profundidad-1, ademas de que cambie de turno
                     t.generaHijos(profundidad-1, not turno)
                     #Agregamos este arbol como hijo
                     self.children.append(t)
+    @staticmethod             
+    def calculaMejorMovimiento(arbol): 
+        print("")
+        valor, nodoPosible = Tree.minimax_alpha_beta(arbol, float('-inf'), float('inf'), False)
+        print([nodoPosible.movimiento[0]-1,nodoPosible.movimiento[1]-1,0])
+        return [nodoPosible.movimiento[0]-1,nodoPosible.movimiento[1]-1,0]
+                    
+    @staticmethod            
+    #self.minimax(self, float('-inf'), float('inf'), self.turno)
+    def minimax_alpha_beta(nodo, alfa, beta, turnoIA): 
+        nodoPosible = None
+        if(nodo.children == []):
+            return 1, nodo #Aqui va la heuristica
+        if nodo.turno==turnoIA:
+            maximo = float('-inf')
+            for hijo in nodo.children: 
+                valor, nodoPosible = Tree.minimax_alpha_beta(hijo, alfa, beta,turnoIA)
+                if(valor > maximo): 
+                    maximo = valor
+                    nodoPosible = nodo
+                alfa = max(alfa, valor)
+                if(valor > alfa): 
+                    alfa = valor
+                if beta <= alfa:
+                    break
+            return maximo, nodoPosible
+        else:
+            minimo = float('inf')
+            for hijo in nodo.children: 
+                valor, nodoPosible = Tree.minimax_alpha_beta(hijo, alfa, beta,turnoIA)
+                minimo = min(minimo, valor)
+                if(minimo > valor): 
+                    minimo = valor
+                    nodoPosible = nodo
+                if(beta > valor): 
+                    beta = valor
+                beta = min(beta, valor)
+                if beta <= alfa:
+                    break
+            return minimo, nodoPosible
+        
             
     '''
     Perzonalizacion del toString que permite que cuando imprimas un arbol, 
