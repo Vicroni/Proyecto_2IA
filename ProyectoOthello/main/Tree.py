@@ -1,4 +1,5 @@
 import re
+from Heuristicas import Heuristicas
 '''
 Clase encargada de almacenar el arbol, 
 de igual forma tiene metodos utiles estaticos 
@@ -66,29 +67,31 @@ class Tree:
                     self.children.append(t)
     @staticmethod             
     def calculaMejorMovimiento(arbol): 
-        print("")
-        valor, nodoPosible = Tree.minimax_alpha_beta(arbol, float('-inf'), float('inf'), False)
-        print([nodoPosible.movimiento[0]-1,nodoPosible.movimiento[1]-1,0])
-        return [nodoPosible.movimiento[0]-1,nodoPosible.movimiento[1]-1,0]
+        valor, nodoPosible = Tree.minimax_alpha_beta(arbol, float('-inf'), float('inf'), True)
+        print([nodoPosible.movimiento[0]-1,nodoPosible.movimiento[1]-1,valor])
+        return [nodoPosible.movimiento[0]-1,nodoPosible.movimiento[1]-1,valor]
                     
     @staticmethod            
     #self.minimax(self, float('-inf'), float('inf'), self.turno)
     def minimax_alpha_beta(nodo, alfa, beta, turnoIA): 
         nodoPosible = None
         if(nodo.children == []):
-            return 1, nodo #Aqui va la heuristica
+            h=Heuristicas(nodo.turno)
+            return h.heuristicaCanon(nodo.data), nodo #Aqui va la heuristica
+        
         if nodo.turno==turnoIA:
             maximo = float('-inf')
             for hijo in nodo.children: 
                 valor, nodoPosible = Tree.minimax_alpha_beta(hijo, alfa, beta,turnoIA)
                 if(valor > maximo): 
                     maximo = valor
-                    nodoPosible = nodo
+                    nodoPosible = hijo
                 alfa = max(alfa, valor)
                 if(valor > alfa): 
                     alfa = valor
                 if beta <= alfa:
                     break
+            print(nodoPosible)
             return maximo, nodoPosible
         else:
             minimo = float('inf')
@@ -97,7 +100,7 @@ class Tree:
                 minimo = min(minimo, valor)
                 if(minimo > valor): 
                     minimo = valor
-                    nodoPosible = nodo
+                    nodoPosible = hijo
                 if(beta > valor): 
                     beta = valor
                 beta = min(beta, valor)

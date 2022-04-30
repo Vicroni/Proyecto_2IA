@@ -68,13 +68,13 @@ def mousePressed():
     global mostrar_menu
     if mostrar_menu :
         if botonFacil.posicionEstaDentroDeEsteFrame(mouseX, mouseY):
-            iniciarJuego("facil")
+            iniciarJuego(Tablero.DIFICULTAD_FACIL)
     
         if botonMedia.posicionEstaDentroDeEsteFrame(mouseX, mouseY):
-            iniciarJuego("medio")
+            iniciarJuego(Tablero.DIFICULTAD_MEDIA)
     
         if botonDificil.posicionEstaDentroDeEsteFrame(mouseX, mouseY):
-            iniciarJuego("dificil")
+            iniciarJuego(Tablero.DIFICULTAD_DIFICIL)
     else:
         if tableroPanel.posicionEstaDentroDeEsteFrame(mouseX, mouseY):
             tableroPanel.onMousePressed(mouseX, mouseY)
@@ -87,7 +87,7 @@ def iniciarJuego(dificultad):
     global mostrar_menu
     mostrar_menu = False
 
-    tab = Tablero() # tab = Tablero(dificultad)
+    tab = Tablero(dificultad) # tab = Tablero(dificultad)
     global sidePanel
     sidePanel = SidePanel(tab)
     global tableroPanel
