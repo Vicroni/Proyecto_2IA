@@ -1,23 +1,25 @@
 # -*- coding: UTF-8 -*-
-from Tablero import Tablero
 from Tree import Tree
 import math
 
 class Heuristicas:
     def __init__(self, blancas):
         if blancas:
-            self.yo = Tablero.BLANCO
-            self.oponente = Tablero.NEGRO
+            self.yo       = Tree.BLANCO
+            self.oponente = Tree.NEGRO
         else:
-            self.yo = Tablero.NEGRO
-            self.oponente = Tablero.BLANCO
+            self.yo       = Tree.NEGRO
+            self.oponente = Tree.BLANCO
 
 
     #eval es usado así para evitar reconstruir la matriz cada quien, pero esta pensado con construirVariacion
     #Esta pensada para ser la suma entre los valores de las fichas descritos en la matriz construirVariacion y la movilidad.
     #Tab es el tablero a evaluar, eval está pensado para recibir la variable en donde se guarde construirVariacion para no reconstruir la matriz cada vez que se quiera
     #evaluar
-    def heuristicaCanon(self,tab, eval):
+    def heuristicaCanon(self, tab, eval):
+        # print("\t heuristicaCanon")
+        # print("\t heuristicaCanon type(tab)" + str(type(tab)))
+        # print("\t heuristicaCanon type(eval)" + str(type(eval)))
         return self.movilidad(tab) + self.tableroEvaluacion(tab,eval)
 
     #Tab es el tablero a evaluar, cuenta directa del número de fichas del color propio que hay en el tablero
@@ -44,8 +46,9 @@ class Heuristicas:
     #Tab es el tablero a evaluar, eval es una matriz de 10 * 10 que asigna puntaje a cada casilla, de forma que el valor regresado es la suma de todas las
     #casillas en las que hay ficha del color propio.
     def tableroEvaluacion(self, tab, eval):
+        # print("\t tableroEvaluacion")
         cuenta = 0
-        for x in tab.tablero:
+        for x in tab:
             for y in x:
                 if y[2] == self.yo:
                     cuenta += eval[y[0]][y[1]]
@@ -81,14 +84,22 @@ class Heuristicas:
         return eval
 
     #Tab es el tablero a evaluar, esta heuristica cuenta el número de tiradas validas que puede hacer el jugador en el tablero actual.
-    def movilidad(self,tab):
-        if self.yo == Tablero.BLANCO:
-            return len(self.noDuplicados(Tree.generaPosiblesMovimiento(tab.tablero,True)))
+    def movilidad(self, tab):
+        # from Tablero import Tablero
+        # import Tablero
+        # print("\t movilidad")
+        if self.yo == Tree.BLANCO:
+            # print("\t movilidad Tree.BLANCO")
+            # print("\t movilidad type(tab)" + str(type(tab)))
+            return len(self.noDuplicados(Tree.generaPosiblesMovimiento(tab, True)))
         else:
-            return len(self.noDuplicados(Tree.generaPosiblesMovimiento(tab.tablero,False)))
+            # print("\t movilidad Tree.NEGRO")
+            # print("\t movilidad type(tab)" + str(type(tab)))
+            return len(self.noDuplicados(Tree.generaPosiblesMovimiento(tab, False)))
 
     #Método que devuelve una matriz de evaluación, basada en los valores propuestos en el siguiente paper: https://www.it.uc3m.es/jvillena/irc/practicas/07-08/Othello.pdf
-    def construirVariacion(self):
+    @staticmethod
+    def construirVariacion():
         eval = [[] for y in range(10)]
         eval[0]=[0,0,0,0,0,0,0,0,0,0]
         eval[1]=[0,50,-1,5,2,2,5,-1,50,0]
@@ -104,6 +115,7 @@ class Heuristicas:
     
     #Función auxiliar para eliminar duplicados de una lista.
     def noDuplicados(self, list):
+        # print("\t noDuplicados")
         newList = []
         for x in list:
             if x not in newList:

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from Tablero import Tablero
 from Tree import Tree
 
@@ -37,49 +38,82 @@ class TableroPanel(Frame):
 
     def dibujar(self):
         # tablero.tablero es la matriz que tiene el objeto Tablero
-        tablero = self.tablero.tablero
+        tab = self.tablero
+        tablero = tab.tablero
         for i in range(8):
             for j in range(8):
                 fill(0, 144, 103)
                 stroke(0) 
                 strokeWeight(1.2)
                 rect(i*self.casilla_tamanio,j*self.casilla_tamanio,self.casilla_tamanio,self.casilla_tamanio)
-                if(tablero[j+1][i+1][2]==Tablero.BLANCO):
-                    fill(255)
+                if(tablero[j+1][i+1][2] != 0):
+                    if(tablero[j+1][i+1][2]==Tablero.BLANCO):
+                        fill(255)
+                    elif(tablero[j+1][i+1][2]==Tablero.NEGRO):
+                        fill(0)
+                    elif(tablero[j+1][i+1][2]==Tablero.POSIBLE):
+                        fill(0, 144, 103)
+                    elif(tablero[j+1][i+1][2]==Tablero.FUTURA):
+                        fill(255, 0, 0)
                     strokeWeight(0.8)
                     ellipse(i*self.casilla_tamanio+self.casilla_tamanio/2,j*self.casilla_tamanio+self.casilla_tamanio/2, 0.85*self.casilla_tamanio,0.85*self.casilla_tamanio)
-                elif(tablero[j+1][i+1][2]==Tablero.NEGRO):
-                    fill(0)
-                    strokeWeight(0.8)
-                    ellipse(i*self.casilla_tamanio+self.casilla_tamanio/2,j*self.casilla_tamanio+self.casilla_tamanio/2, 0.85*self.casilla_tamanio,0.85*self.casilla_tamanio)
-                elif(tablero[j+1][i+1][2]==Tablero.POSIBLE):
-                    fill(0, 144, 103)
-                    strokeWeight(0.8)
-                    ellipse(i*self.casilla_tamanio+self.casilla_tamanio/2,j*self.casilla_tamanio+self.casilla_tamanio/2, 0.85*self.casilla_tamanio,0.85*self.casilla_tamanio)
+        
+        # Si es el turno de la IA
+        if tab.ia == tab.turno:
+            print(": : : : : > Empieza turno de la IA < : : : : :")
+            # Revisamos si hay casillas válidas para la IA
+            validas = tab.generaPosiblesMovimiento()
+            
+            # Si las hay, la IA realiza su jugada
+            if not validas:
+                # print("Hay validas tab.ia == tab.turno")
+                tab.colocaPosiblesMovimientos()
+                tab.jugadaAutomatica()
+                # print("jugadaAutomatica tab.ia == tab.turno")
+                # Verificamos si el jueho terminó
+                self.sidePanel.verificarFinDelJuego()
+                # print("verificarFinDelJuego tab.ia == tab.turno")
+                # Ademas de cambiar el turno
+                tab.cambiarTurno()
+                print(": : : : : > Turno del Humano < : : : : :")
+                # print("cambiarTurno tab.ia == tab.turno")
+                # Colocamos los posibles movimientos
+                tab.colocaPosiblesMovimientos()
+                # print("colocaPosiblesMovimientos tab.ia == tab.turno")
+        else:
+            tab.cambiarTurno()
+            print(": : : : : > Turno del Humano < : : : : :")
 
     def onMousePressed(self, mouseX, mouseY):
         tab = self.tablero
         x=mouseY/self.casilla_tamanio
         y=mouseX/self.casilla_tamanio
-        
-        #Si corresponde a una casilla valida
-        if tab.tablero[x+1][y+1][2] == Tablero.POSIBLE:
-            #Colcamos la ficha y volteamos las fichas correspondientes
-            tab.colocarFicha(x,y)
-            tab.tablero = Tree.voltearFichas(x,y, tab.tablero, tab.turno)
 
-            self.seColocoUnaFicha()
+        # Si no es el turno de la IA
+        if tab.ia != tab.turno:
+            # Si corresponde a una casilla válida para el humano
+            if tab.tablero[x+1][y+1][2] == Tablero.POSIBLE:
+                print("Hay posibles onMousePressed")
+                # Colcamos la ficha y volteamos las fichas correspondientes
+                print("Antes de colocarFicha \n" + str(tab))
+                tab.colocarFicha(x,y)
+                print("Despues de colocarFicha \n" + str(tab))
+                print("Antes de voltearFichas")
+                tab.tablero = Tree.voltearFichas(x,y, tab.tablero, tab.turno)
+                print("Despues de voltearFichas \n" + str(tab))
+                self.sidePanel.verificarFinDelJuego()
+                tab.cambiarTurno()
+                print(": : : : : > Turno de la IA < : : : : :")
+                # print("Se cambiarTurno onMousePressed")
+                # tab.colocaPosiblesMovimientos()
+                # print("Se colocaPosiblesMovimientos onMousePressed")
 
-            #Ademas de cambiar el turno
-            tab.cambiarTurno()
-            #Colocamos los posibles movimientos
-            tab.colocaPosiblesMovimientos()
-    
-    """
-    Este se debe llamar cada que se coloque una ficha
-    """
-    def seColocoUnaFicha(self):
-        self.sidePanel.verificarFinDelJuego()
+
+    # """
+    # Este se debe llamar cada que se coloque una ficha
+    # """
+    # def seColocoUnaFicha(self):
+    #     self.sidePanel.verificarFinDelJuego()
 
 """
 Clase que define la barra derecha que muestra la cuenta de fichas en el tablero,
@@ -95,6 +129,9 @@ class SidePanel(Frame):
         self.alto = TableroPanel.TAMANO_CASILLA_DEFAULT*8
         self.tablero = tablero
         self.juegoTerminado = False
+    
+    def getJuegoTerminado(self):
+        return self.juegoTerminado
     
     def dibujar(self):
         posTexto1 = (self.posicion[0]+70,self.posicion[1]+100)

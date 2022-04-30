@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import re
 '''
 Clase encargada de almacenar el arbol, 
@@ -7,9 +8,10 @@ para voltearFichas, limpiarPosiblesMovimientos, generaPosiblesMovimiento
 class Tree:
     #Constantes de clase para evitar errores al momento de comparar 
     #tanto en el tablero como en el main que se encarga de la visualizacion
-    BLANCO=1
-    NEGRO=2
-    POSIBLE=3
+    BLANCO  = 1
+    NEGRO   = 2
+    POSIBLE = 3
+    FUTURA  = 4
     
     '''
     Inicializa el arbol, recibiendo en data un tablero 
@@ -22,6 +24,9 @@ class Tree:
         self.data = copia
         self.children = []
 
+    def getData(self):
+        return self.data
+
     '''
     Metodo recursivo que recibe dos argumentos profundidad
     (que indica que tan profundo es el arbol que se va generar) 
@@ -31,7 +36,7 @@ class Tree:
     El caso recursivo es cuando la profundidad es mayor a 0, entonces genera los posibles movimientos,
     y crea arboles con los tableros que se generan con esos movimientos. Posteriormente los 
     agrega a la lista de hijos y les ordena generar hijos con una profundidad=profundidad-1
-     
+    
     Si no hay posibles movimientos entonces cambia de turno y
     genera los posibles movimientos del otro jugador
     '''
@@ -146,6 +151,7 @@ class Tree:
     '''
     @staticmethod         
     def generaPosiblesMovimiento(matriz, turno):
+        # print("\t\t generaPosiblesMovimiento")
         #Genera las posibles combinaciones de la matriz(Filas, Columnas, Diagonales Derechas, Diagonales Izquierdas)
         max_col = len(matriz[0])
         max_row = len(matriz)
