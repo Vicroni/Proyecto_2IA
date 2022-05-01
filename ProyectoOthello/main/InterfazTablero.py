@@ -1,5 +1,6 @@
 from Tablero import Tablero
 from Tree import Tree
+import time
 
 """
 Este modulo contiene los elementos para mostrar la interfaz del juego de Othello.
@@ -67,13 +68,25 @@ class TableroPanel(Frame):
             #Colcamos la ficha y volteamos las fichas correspondientes
             tab.colocarFicha(x,y)
             tab.tablero = Tree.voltearFichas(x,y, tab.tablero, tab.turno)
-
             self.seColocoUnaFicha()
-
             #Ademas de cambiar el turno
             tab.cambiarTurno()
-            #Colocamos los posibles movimientos
-            tab.colocaPosiblesMovimientos()
+            if tab.turno:
+                Tree.limpiarPosiblesMovimientos(tab.tablero)
+                validas=Tree.generaPosiblesMovimiento(tab.tablero, tab.turno)
+                #Pintamos los posibles movimientos en el tablero
+                
+                if validas != []: 
+                    #Juego automatico
+                    tab.tree = Tree(tab.tablero, tab.anterior, tab.turno)
+                    tab.tree.generaHijos(tab.dificultad, tab.turno)
+                    [x,y,v] = Tree.calculaMejorMovimiento(tab.tree)
+                    tab.colocarFicha(x, y)
+                    tab.tablero = Tree.voltearFichas(x,y,tab.tablero, tab.turno)
+                    tab.cambiarTurno()
+                    tab.colocaPosiblesMovimientos()
+
+
     
     """
     Este se debe llamar cada que se coloque una ficha

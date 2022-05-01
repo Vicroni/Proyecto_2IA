@@ -68,21 +68,24 @@ class Tree:
     @staticmethod             
     def calculaMejorMovimiento(arbol): 
         valor, nodoPosible = Tree.minimax_alpha_beta(arbol, float('-inf'), float('inf'), True)
+        print("aaaa")
+        print(nodoPosible)
         print([nodoPosible.movimiento[0]-1,nodoPosible.movimiento[1]-1,valor])
         return [nodoPosible.movimiento[0]-1,nodoPosible.movimiento[1]-1,valor]
                     
     @staticmethod            
     #self.minimax(self, float('-inf'), float('inf'), self.turno)
-    def minimax_alpha_beta(nodo, alfa, beta, turnoIA): 
+    def minimax_alpha_beta(nodo, alfa, beta, turnoIA):
+        print(len(nodo.children))
         nodoPosible = None
         if(nodo.children == []):
             h=Heuristicas(nodo.turno)
-            return h.heuristicaCanon(nodo.data), nodo #Aqui va la heuristica
+            return h.heuristicaCanon(nodo.data), None #Aqui va la heuristica
         
         if nodo.turno==turnoIA:
             maximo = float('-inf')
             for hijo in nodo.children: 
-                valor, nodoPosible = Tree.minimax_alpha_beta(hijo, alfa, beta,turnoIA)
+                valor, _ = Tree.minimax_alpha_beta(hijo, alfa, beta,turnoIA)
                 if(valor > maximo): 
                     maximo = valor
                     nodoPosible = hijo
@@ -91,12 +94,11 @@ class Tree:
                     alfa = valor
                 if beta <= alfa:
                     break
-            print(nodoPosible)
             return maximo, nodoPosible
         else:
             minimo = float('inf')
             for hijo in nodo.children: 
-                valor, nodoPosible = Tree.minimax_alpha_beta(hijo, alfa, beta,turnoIA)
+                valor, _ = Tree.minimax_alpha_beta(hijo, alfa, beta,turnoIA)
                 minimo = min(minimo, valor)
                 if(minimo > valor): 
                     minimo = valor
@@ -106,6 +108,7 @@ class Tree:
                 beta = min(beta, valor)
                 if beta <= alfa:
                     break
+            
             return minimo, nodoPosible
         
             
