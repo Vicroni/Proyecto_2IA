@@ -82,9 +82,14 @@ class TableroPanel(Frame):
                     tab.tree.generaHijos(tab.dificultad, tab.turno)
                     [x,y,v] = Tree.calculaMejorMovimiento(tab.tree)
                     tab.colocarFicha(x, y)
+                    self.seColocoUnaFicha()
                     tab.tablero = Tree.voltearFichas(x,y,tab.tablero, tab.turno)
                     tab.cambiarTurno()
                     tab.colocaPosiblesMovimientos()
+                else: 
+                    tab.cambiarTurno()
+                    tab.colocaPosiblesMovimientos()
+                    
 
 
     

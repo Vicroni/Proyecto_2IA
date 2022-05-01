@@ -68,15 +68,13 @@ class Tree:
     @staticmethod             
     def calculaMejorMovimiento(arbol): 
         valor, nodoPosible = Tree.minimax_alpha_beta(arbol, float('-inf'), float('inf'), True)
-        print("aaaa")
-        print(nodoPosible)
-        print([nodoPosible.movimiento[0]-1,nodoPosible.movimiento[1]-1,valor])
+        print("La IA pone su ficha en [{},{}] y el valor heuristico es {}".format(
+            nodoPosible.movimiento[1], nodoPosible.movimiento[0] , valor))
         return [nodoPosible.movimiento[0]-1,nodoPosible.movimiento[1]-1,valor]
                     
     @staticmethod            
     #self.minimax(self, float('-inf'), float('inf'), self.turno)
     def minimax_alpha_beta(nodo, alfa, beta, turnoIA):
-        print(len(nodo.children))
         nodoPosible = None
         if(nodo.children == []):
             h=Heuristicas(nodo.turno)

@@ -62,6 +62,7 @@ class Tablero:
         validas=Tree.generaPosiblesMovimiento(self.tablero, self.turno)
         for x,y,v in validas: 
             self.tablero[x][y]=[x,y,3]
+        
 
 
                      
